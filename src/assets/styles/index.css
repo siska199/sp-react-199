@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply box-border p-0 m-0;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply relative text-body-base  bg-white text-gray-800;
+  }
+
+  h1 {
+    @apply text-heading-01;
+  }
+  h2 {
+    @apply text-heading-02;
+  }
+  h3 {
+    @apply text-heading-03;
+  }
+  h4 {
+    @apply text-heading-04;
+  }
+  h5 {
+    @apply text-heading-05;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    @apply font-bold;
+  }
+
+  p {
+    @apply text-body-base  font-[400] text-justify;
+  }
+}
+
+@layer components {
+  /*->Remove background autofill input*/
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /*->ustomize input number */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+
+  /*->Customize scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  ::-webkit-scrollbar-track {
+    box-shadow: none;
+    border-radius: 10px;
+    background: white;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-lg bg-gray-300;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-300;
+  }
+
+  /*->Hide scrollbar */
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /*->FOR SVG ICON set color dinamically */
+  .icon-white path,
+  .icon-white rect,
+  .icon-white circle {
+    @apply !stroke-white;
+  }
+  .icon-white-fill path {
+    @apply fill-white;
+  }
+
+  .icon-black path,
+  .icon-black rect {
+    @apply stroke-black;
+  }
+  .icon-black-fill path {
+    @apply fill-black;
+  }
+
+  .icon-gray path,
+  .icon-gray rect {
+    @apply stroke-gray;
+  }
+  .icon-gray circle {
+    @apply !stroke-gray;
+  }
+  .icon-gray-fill path {
+    @apply fill-gray;
+  }
+
+  .icon-primary path,
+  .icon-primary rect {
+    @apply stroke-primary;
+  }
+  .icon-primary-fill path {
+    @apply fill-primary;
+  }
+
+  .icon-blue path,
+  .icon-blue rect,
+  .icon-blue circle {
+    @apply stroke-blue;
+  }
+  .icon-blue-fill path {
+    @apply fill-blue;
+  }
+
+  .icon-error path,
+  .icon-error rect {
+    @apply stroke-error;
+  }
+  .icon-error-fill path {
+    @apply fill-error;
+  }
+
+  .icon-warning path,
+  .icon-warning rect {
+    @apply !stroke-warning;
+  }
+  .icon-warning-fill path {
+    @apply fill-warning;
+  }
+
+  .icon-sucess path,
+  .icon-sucess rect {
+    @apply stroke-sucess;
+  }
+  .icon-sucess-fill path {
+    @apply fill-sucess;
+  }
+}
+
+@layer utilities {
+
+
+  /*->Bounce effect */
+  .bounce-effect {
+    @apply transition-all duration-[50] hover:scale-[1.03] active:scale-[0.98] disabled:!scale-[1] disabled:cursor-not-allowed;
+  }
+
+  .bounce-effect-disabled {
+    @apply transition-none hover:scale-100 active:scale-100;
+  }
+
+  .cursor-pointer-custome {
+    @apply bounce-effect cursor-pointer;
+  }
+}
