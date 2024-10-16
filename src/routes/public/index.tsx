@@ -1,5 +1,5 @@
-import GlobalLayout from "@components/layouts/GlobalLayout";
-import PublicLayout from "@components/layouts/PublicLayout";
+import GlobalLayout from "@components/layouts/global-layout";
+import PublicLayout from "@components/layouts/public-layout";
 import exampleComponentRoute from "@routes/public/example-component-route";
 import React from "react";
 import { RouteObject } from "react-router-dom";

@@ -1,5 +1,5 @@
-import GlobalLayout from "@components/layouts/GlobalLayout";
-import Protectedlayout from "@components/layouts/Protectedlayout";
+import GlobalLayout from "@components/layouts/global-layout";
+import Protectedlayout from "@components/layouts/protected-layout";
 import homeRoute from "@routes/protected/home-route";
 import React from "react";
 import { RouteObject } from "react-router-dom";
