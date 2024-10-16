@@ -1,4 +1,4 @@
-import useCurrentPath from "@hooks/useCurrentPath";
+import useCurrentPath from "@hooks/use-current-path";
 import { routes } from "@routes/constant";
 import { useAppSelector } from "@store-redux/store";
 import { useEffect } from "react";

@@ -16,7 +16,7 @@ import {
   isEmptyValue,
   spreadArrayAttemp,
 } from "@lib/helper/helper";
-import useOnClickOutside from "@hooks/useOnClickOutside";
+import useOnClickOutside from "@hooks/use-on-click-outside";
 
 export type TPropsInputSelect = {
   name: string;
