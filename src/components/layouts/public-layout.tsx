@@ -17,12 +17,8 @@ const PublicLayout = () => {
   }, [isAuthenticated]);
 
   return (
-    <div className={`bg-sport-plain h-screen  relative  w-full`}>
-      <div
-        className={`absolute top-0 bg-glassmorphism text-white h-full w-full`}
-      >
-        <Outlet />
-      </div>
+    <div className={` h-screen  relative  w-full`}>
+      <Outlet />
     </div>
   );
 };
