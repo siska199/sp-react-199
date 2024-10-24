@@ -1,4 +1,4 @@
-import { cn } from "@lib/helper/helper";
+import { cn } from "@lib/helper/function";
 import { VariantProps, cva } from "class-variance-authority";
 import React, { forwardRef } from "react";
 

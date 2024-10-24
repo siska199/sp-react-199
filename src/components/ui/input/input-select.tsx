@@ -3,20 +3,21 @@ import IconChevronToggle from "@assets/icons/icon-chevron-down";
 import Badge from "@components/ui/badge";
 import ContainerInput from "@components/ui/input/container-input";
 import InputMultipleCheckbox from "@components/ui/input/input-multiple-checkbox";
-import {
-  TBasePropsInput,
-  TCustomeEventOnChange,
-  TOption,
-} from "@typescript/ui-d";
-import clsx from "clsx";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import useOnClickOutside from "@hooks/use-on-click-outside";
 import {
   debounce,
   getFieldLabelFromOptions,
   isEmptyValue,
   spreadArrayAttemp,
-} from "@lib/helper/helper";
-import useOnClickOutside from "@hooks/use-on-click-outside";
+} from "@lib/helper/function";
+import {
+  TBasePropsInput,
+  TCustomeEventOnChange,
+  TOption,
+} from "@typescript/ui-d";
+
+import clsx from "clsx";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 export type TPropsInputSelect = {
   name: string;
@@ -29,15 +30,15 @@ interface SingleSelectProps
   extends TBasePropsInput,
     Omit<React.HTMLProps<HTMLInputElement>, "onChange"> {
   isMultiple?: false;
-  value: string;
+  value?: string;
   withSelectAll?: false;
 }
 
 interface MultipleSelectProps
   extends TBasePropsInput,
     Omit<React.HTMLProps<HTMLInputElement>, "onChange"> {
-  isMultiple: true;
-  value: string[];
+  isMultiple?: true;
+  value?: string[];
   withSelectAll?: boolean;
 }
 
@@ -78,10 +79,11 @@ const InputSelect = (props: TPropsInputSelect) => {
 
   useEffect(() => {
     if (refInput?.current && isMultiple) {
-      refInput.current.style.width =
+      const width =
         searchQuery || !isEmptyValue(attrs.value)
           ? `${searchQuery?.length * 10 || 10}px`
-          : "auto";
+          : "100%";
+      refInput.current.style.width = width;
     }
   }, [searchQuery, isMultiple, attrs.value]);
 
@@ -200,7 +202,6 @@ const InputSelect = (props: TPropsInputSelect) => {
 
   const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     let currentActiveIndex = activeIndex;
-    console.log("currentActiveIndex:", currentActiveIndex);
     if (e.key === "ArrowDown") {
       currentActiveIndex =
         activeIndex === filteredOptions?.length ? activeIndex : activeIndex + 1;
@@ -222,7 +223,7 @@ const InputSelect = (props: TPropsInputSelect) => {
       isClerable
       onCustomeClearHandler={handleOnClearValue}
       customeClearValue={
-        isMultiple ? searchQuery : String(attrs?.value) || searchQuery
+        isMultiple ? searchQuery : String(attrs?.value ?? "") || searchQuery
       }
       customeElement={{
         ...attrs?.customeElement,
@@ -301,7 +302,7 @@ const InputSelect = (props: TPropsInputSelect) => {
                   );
                 })}
                 {filteredOptions?.length == 0 && (
-                  <div className="p-3 w-full !bg-gray-100  text-gray">
+                  <div className="p-3 w-full rounded-md !bg-gray-100  text-gray">
                     No Option
                   </div>
                 )}
@@ -355,7 +356,7 @@ const InputSelect = (props: TPropsInputSelect) => {
               onChange={handleSearchChange}
               value={String(searchQuery) || ""}
               ref={refInput}
-              autoComplete={"off"}
+              autoComplete={"password-off"}
               placeholder={isEmptyValue(attrs.value) ? attrs.placeholder : ""}
             />
           </div>

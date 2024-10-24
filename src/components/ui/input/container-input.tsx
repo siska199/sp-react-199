@@ -1,9 +1,8 @@
 import { IconClose, IconEye, IconEyeClose } from "@assets/icons";
 import Container from "@components/ui/container/container";
 import HelperMessage from "@components/ui/helper-message";
-import { cn, isEmptyValue } from "@lib/helper/helper";
+import { cn, isEmptyValue } from "@lib/helper/function";
 import { TBasePropsInput } from "@typescript/ui-d";
-
 import { useState } from "react";
 
 export interface TPropsInput<TInput> extends TBasePropsInput {
@@ -21,6 +20,7 @@ export interface TPropsInput<TInput> extends TBasePropsInput {
   };
   onCustomeClearHandler?: () => void;
   customeClearValue?: string;
+  maxLength?: number;
 }
 
 const ContainerInput = <TInput,>(props: TPropsInput<TInput>) => {
@@ -42,6 +42,7 @@ const ContainerInput = <TInput,>(props: TPropsInput<TInput>) => {
     customeClass,
     value,
     onChange,
+    maxLength,
     ...attrsInput
   } = props;
 
@@ -49,6 +50,10 @@ const ContainerInput = <TInput,>(props: TPropsInput<TInput>) => {
 
   const handleToggleTypePassword = () => {
     setDynamicType(dynamicType === "password" ? "text" : "password");
+  };
+
+  const handelOnChange = (e: any) => {
+    if (maxLength != Number(value?.length ?? 0) && onChange) return onChange(e);
   };
 
   const handleOnClearValue = () => {
@@ -66,9 +71,17 @@ const ContainerInput = <TInput,>(props: TPropsInput<TInput>) => {
     <Container className={`${customeClass?.ciV4} relative flex flex-col gap-1`}>
       <section className={`${customeClass?.ciV3} flex flex-col gap-2 w-full`}>
         {label && (
-          <label htmlFor={name} className={"font-medium w-fit"}>
-            {label}
-          </label>
+          <div className="flex justify-between gap-4">
+            <label htmlFor={name} className={"font-medium w-fit"}>
+              {label}
+            </label>
+
+            {maxLength && (
+              <span className="text-gray text-body-small">
+                {maxLength - Number(value?.length ?? 0)}
+              </span>
+            )}
+          </div>
         )}
 
         {onlyContainer && typeof children !== "function" ? (
@@ -95,7 +108,7 @@ const ContainerInput = <TInput,>(props: TPropsInput<TInput>) => {
             />
 
             <div
-              className={`${customeClass?.ciV1} flex flex-col w-full relative `}
+              className={`${customeClass?.ciV1} text-black flex flex-col w-full relative `}
             >
               {typeof children === "function" ? (
                 <>
@@ -104,7 +117,6 @@ const ContainerInput = <TInput,>(props: TPropsInput<TInput>) => {
                     className: cn({
                       "peer w-full shrink !outline-none border-none focus:border-none focus:ring-0 p-0 text-body-base placeholder:text-gray-400":
                         !isNotUsingDefaultStyle?.input,
-                      "!bg-disabled": disabled,
                       "px-4": customeElement?.preEnd,
                       "pr-4 pl-1": customeElement?.preStart,
                       [customeClass?.input || ""]: customeClass?.input,
@@ -113,7 +125,8 @@ const ContainerInput = <TInput,>(props: TPropsInput<TInput>) => {
                     type: dynamicType,
                     disabled,
                     value,
-                    onChange,
+                    onChange: handelOnChange,
+                    maxLength,
                   })}
                 </>
               ) : (

@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import InputCheckbox from "@components/ui/input/input-checkbox";
-import { cn } from "@lib/helper/function";
 import Button from "@components/ui/button";
 import {
   IconArrowUp,
@@ -14,6 +13,7 @@ import {
 import EmptyData from "@components/ui/empty-data";
 import Badge from "@components/ui/badge";
 import { TColumn, TSettingTable } from "@typescript/ui-d";
+import { cn } from "@lib/helper/function";
 
 type WithId<T> = T & { id: string | number };
 type WithOptionalChecked<T, TInclude extends boolean> = TInclude extends true
@@ -224,6 +224,9 @@ const Table = <TData, TIncludeChecked extends boolean = false>(
                               label={<IconEye className="icon-blue" />}
                               shape={"pilled"}
                               className={style.iconAction}
+                              onClick={() =>
+                                actionBtn?.view && actionBtn?.view(dataRow)
+                              }
                             />
                           )}
                           {actionBtn?.edit && (
@@ -232,6 +235,9 @@ const Table = <TData, TIncludeChecked extends boolean = false>(
                               label={<IconEdit className="icon-warning" />}
                               shape={"pilled"}
                               className={style.iconAction}
+                              onClick={() =>
+                                actionBtn?.edit && actionBtn?.edit(dataRow)
+                              }
                             />
                           )}
                           {actionBtn?.delete && (
@@ -240,6 +246,9 @@ const Table = <TData, TIncludeChecked extends boolean = false>(
                               label={<IconDelete className="icon-error" />}
                               shape={"pilled"}
                               className={style.iconAction}
+                              onClick={() =>
+                                actionBtn?.delete && actionBtn?.delete(dataRow)
+                              }
                             />
                           )}
                         </div>

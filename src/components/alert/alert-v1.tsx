@@ -4,36 +4,36 @@ import {
   IconInfo,
   IconNotification,
   IconSucess,
-} from "@assets/icons";
+} from '@assets/icons';
+import { cn } from '@lib/helper/function';
 
-import { cn } from "@lib/helper/function";
 import variantsAlert, {
   variantAlertError,
   variantAlertSucess,
   variantAlertWarning,
-} from "@lib/variant/variant-alert";
-import variant from "@lib/variant/variant-color";
-import { handleSetAlertConfig } from "@store-redux/features/ui/ui-slice";
-import { TAlertConfig } from "@typescript/ui-d";
+} from '@lib/variant/variant-alert';
+import variant from '@lib/variant/variant-color';
+import { handleSetAlertConfig } from '@store-redux/modules/ui/ui-slice';
+import { TAlertConfig } from '@typescript/ui-d';
 
-import { VariantProps, cva } from "class-variance-authority";
-import { HTMLProps, useEffect, useState } from "react";
+import { VariantProps, cva } from 'class-variance-authority';
+import { HTMLProps, useEffect, useState } from 'react';
 
 interface TPropsVariantError extends VariantProps<typeof alertVariantError> {
-  type: "error";
+  type: 'error';
 }
 interface TPropsVariantWarning
   extends VariantProps<typeof alertVariantWarning> {
-  type: "warning";
+  type: 'warning';
 }
 
 interface TPropsVariantSuccess extends VariantProps<typeof alertVariantSucess> {
-  type: "sucess";
+  type: 'sucess';
 }
 
 interface TPropsVariantGeneral
   extends VariantProps<typeof alertVariantGeneral> {
-  type?: "notification" | "info";
+  type?: 'notification' | 'info';
 }
 
 export type TAlertProps = HTMLProps<HTMLButtonElement> &
@@ -49,15 +49,15 @@ const Alert = (props: TAlertProps) => {
   const {
     variant,
     customeIcon,
-    type = "info",
+    type = 'info',
     withIcon,
     show,
     message,
     isFixed = true,
     withCloseBtn = false,
     autoClose = true,
-    className = "",
-    position = "top-right",
+    className = '',
+    position = 'top-right',
     timeout = 3000,
     onDismiss: handleOnDismiss,
   } = props;
@@ -81,14 +81,14 @@ const Alert = (props: TAlertProps) => {
 
   const getAlertVariant = () => {
     switch (type) {
-      case "error":
+      case 'error':
         return alertVariantError;
-      case "sucess":
+      case 'sucess':
         return alertVariantSucess;
-      case "warning":
+      case 'warning':
         return alertVariantWarning;
-      case "notification":
-      case "info":
+      case 'notification':
+      case 'info':
         return alertVariantGeneral;
       default:
         return alertVariantError; // Default to error variant if type is not specified or unrecognized
@@ -103,18 +103,18 @@ const Alert = (props: TAlertProps) => {
     <div className={cn(alertVariant(paramsAlertVariant))}>
       <div
         className={cn({
-          "flex gap-3 w-full relative": true,
-          "pr-4": withCloseBtn,
+          'flex gap-3 w-full relative': true,
+          'pr-4': withCloseBtn,
         })}
       >
         {withCloseBtn && (
           <IconClose
             onClick={handleOnDismiss}
             className={cn({
-              "top-1 right-0 absolute  cursor-pointer-custome": true,
-              "icon-warning": type === "warning",
-              "icon-error": type === "error",
-              "icon-sucess": type === "sucess",
+              'top-1 right-0 absolute  cursor-pointer-custome': true,
+              'icon-warning': type === 'warning',
+              'icon-error': type === 'error',
+              'icon-sucess': type === 'sucess',
             })}
           />
         )}
@@ -123,11 +123,11 @@ const Alert = (props: TAlertProps) => {
           <span className="mt-1">
             {customeIcon ?? (
               <>
-                {type === "info" && <IconInfo className="icon-gray" />}
-                {type === "warning" && <IconInfo className="icon-warning " />}
-                {type === "error" && <IconDanger className="icon-error" />}
-                {type === "sucess" && <IconSucess className="icon-sucess" />}
-                {type === "notification" && <IconNotification />}
+                {type === 'info' && <IconInfo className="icon-gray" />}
+                {type === 'warning' && <IconInfo className="icon-warning " />}
+                {type === 'error' && <IconDanger className="icon-error" />}
+                {type === 'sucess' && <IconSucess className="icon-sucess" />}
+                {type === 'notification' && <IconNotification />}
               </>
             )}
           </span>
@@ -139,7 +139,7 @@ const Alert = (props: TAlertProps) => {
 };
 
 const generalStyle =
-  "flex flex-shrink gap-3 px-3 py-2 border w-fit min-w-[15rem] rounded-md max-w-[20rem]";
+  'flex flex-shrink gap-3 px-3 py-2 border w-fit min-w-[15rem] rounded-md max-w-[20rem]';
 
 const alertVariantError = cva(generalStyle, {
   variants: {
@@ -149,7 +149,7 @@ const alertVariantError = cva(generalStyle, {
     },
   },
   defaultVariants: {
-    variant: "error-soft",
+    variant: 'error-soft',
   },
 });
 
@@ -161,7 +161,7 @@ const alertVariantSucess = cva(generalStyle, {
     },
   },
   defaultVariants: {
-    variant: "sucess-soft",
+    variant: 'sucess-soft',
   },
 });
 
@@ -173,7 +173,7 @@ const alertVariantWarning = cva(generalStyle, {
     },
   },
   defaultVariants: {
-    variant: "warning-soft",
+    variant: 'warning-soft',
   },
 });
 
@@ -185,7 +185,7 @@ const alertVariantGeneral = cva(generalStyle, {
     },
   },
   defaultVariants: {
-    variant: "solid-white",
+    variant: 'solid-white',
   },
 });
 

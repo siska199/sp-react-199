@@ -1,9 +1,9 @@
 import Container from '@components/ui/container/container';
 import ContainerInput from '@components/ui/input/container-input';
 import InputCheckbox from '@components/ui/input/input-checkbox';
-import { arraysHaveSameMembers, cn, handlePreventDefault } from '@lib/helper/helper';
-import { TBasePropsInput, TCustomeEventOnChange } from '@typescript/ui-d';
+import { arraysHaveSameMembers, cn, handlePreventDefault } from '@lib/helper';
 import { useEffect, useState } from 'react';
+import { TBasePropsInput, TCustomeEventOnChange } from 'types/ui-types';
 
 interface TProps
   extends TBasePropsInput,

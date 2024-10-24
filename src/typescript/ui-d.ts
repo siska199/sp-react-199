@@ -49,7 +49,7 @@ export interface TAlertConfig {
   customeIcon?: React.ReactNode;
 }
 
-export enum TTypeFile {
+export enum ETypeFile {
   JPG = ".jpg",
   JPEG = ".jpeg",
   PNG = ".png",
@@ -95,7 +95,7 @@ export interface TUploadedFile {
   id: number;
   status: "onprogress" | "done";
   name: string;
-  type: TTypeFile;
+  type: ETypeFile;
   size: number;
 }
 
@@ -124,6 +124,13 @@ export interface TSettingTable<TData> {
   currentPage: number;
   totalPage: number;
   itemsPerPage: number;
+}
+
+export interface TBaseModal {
+  isShow: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+  title?: React.ReactNode;
 }
 
 /*--->Redux */

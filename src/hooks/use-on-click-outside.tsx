@@ -1,14 +1,14 @@
-import { isEmptyValue } from '@lib/helper/helper'
-import { RefObject, useEffect } from 'react'
+import { isEmptyValue } from "@lib/helper/function";
+import { RefObject, useEffect } from "react";
 
 interface TProps<T> {
-  handler: () => void
-  ref: RefObject<T>
-  refExceptions?: RefObject<T>[]
+  handler: () => void;
+  ref: RefObject<T>;
+  refExceptions?: RefObject<T>[];
 }
 
 const useOnClickOutside = <T extends HTMLElement>(props: TProps<T>) => {
-  const { ref, handler, refExceptions } = props
+  const { ref, handler, refExceptions } = props;
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       if (
@@ -17,20 +17,20 @@ const useOnClickOutside = <T extends HTMLElement>(props: TProps<T>) => {
         (isEmptyValue(refExceptions)
           ? true
           : !refExceptions?.some((exceptionRef) => {
-              return exceptionRef.current?.contains(event.target as Node)
+              return exceptionRef.current?.contains(event.target as Node);
             }))
       ) {
-        handler()
+        handler();
       }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    document.addEventListener('touchstart', handleClickOutside)
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-      document.removeEventListener('touchstart', handleClickOutside)
-    }
-  }, [ref, handler])
-}
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [ref, handler]);
+};
 
-export default useOnClickOutside
+export default useOnClickOutside;

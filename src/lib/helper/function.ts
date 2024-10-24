@@ -1,6 +1,8 @@
-import clsx from "clsx";
-import { ClassValue } from "clsx";
+import clsx, { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import z, { object, ZodType } from "zod";
+import { TObject } from "@typescript/global";
+import { ETypeFile, TOption } from "@typescript/ui-d";
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
@@ -88,6 +90,21 @@ export const handleGetFileTypeFromName = (name: string) => {
   return `.${type?.toLowerCase()}`;
 };
 
+export const handleValidateType = (params: {
+  file: File;
+  listAcceptedType: ETypeFile[];
+}) => {
+  const { file, listAcceptedType } = params;
+  const type = handleGetFileTypeFromName(file?.name) as ETypeFile;
+
+  const isAllTypeAllow = listAcceptedType?.includes(ETypeFile.ALL);
+  const isAllImageTypeAllow = listAcceptedType?.includes(ETypeFile.IMAGE_ALL);
+  const isTypeAllow =
+    isAllTypeAllow || listAcceptedType?.includes(type) || isAllImageTypeAllow;
+
+  return isTypeAllow;
+};
+
 interface TParamsDownloadFile {
   url: string;
   filename: string;
@@ -126,4 +143,52 @@ export const excludeRef = <T extends { ref?: any }>(input: T) => {
 
 export const delay = (ms: number): Promise<void> => {
   return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const generateUrlQueryParams = (params: {
+  url: string;
+  queryObject: TObject;
+}) => {
+  const { url, queryObject } = params;
+  const queryParams = new URLSearchParams(queryObject);
+  const newUrl = `${url}?${queryParams.toString()}`;
+  return newUrl;
+};
+
+export const generateDefaultValue = (schema: ZodType<any>): any => {
+  if (schema instanceof z.ZodString) return "";
+  if (schema instanceof z.ZodObject) {
+    const shape = schema.shape;
+    const defaultObj: { [key: string]: any } = {};
+    for (const key in shape) {
+      defaultObj[key] = generateDefaultValue(shape[key]);
+    }
+    return defaultObj;
+  }
+  if (schema instanceof z.ZodArray) null;
+  if (schema instanceof z.ZodOptional) return null;
+  if (schema instanceof z.ZodNull) return null;
+  if (schema instanceof z.ZodEffects) return "";
+};
+
+export const generateOptions = (params: {
+  options: TObject;
+  labelName: string;
+  valueName: string;
+}) => {
+  const { options, labelName, valueName } = params;
+
+  return options?.map((option: TObject) => ({
+    label: option[labelName],
+    value: option[valueName],
+  }));
+};
+
+export const generateOptionsFromEnum = (
+  enumObject: TObject
+): TOption<string>[] => {
+  return Object?.keys(enumObject)?.map((key) => ({
+    label: enumObject[key],
+    value: enumObject[key],
+  }));
 };
